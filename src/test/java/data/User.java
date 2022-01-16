@@ -5,6 +5,8 @@ import lombok.Getter;
 @Getter
 public class User {
 
+    public final String objectName = "This is a user";
+
     private String firstName;
     private String lastName;
     private Address address;
@@ -15,5 +17,17 @@ public class User {
         this.lastName = lastName;
         this.address = address;
         this.company = company;
+    }
+
+    public String displayUser() {
+        return firstName + " " + lastName + ", " + getJobToDisplay();
+    }
+
+    private String getJobToDisplay() {
+        if (company != null) {
+            return company.getName();
+        } else {
+            return "unemployed";
+        }
     }
 }

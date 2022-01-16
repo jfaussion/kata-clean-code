@@ -23,26 +23,38 @@ public class KeyWordUtilsTest {
     }
 
     @Test
-    public void testWhitSingleAttribut() {
-        var result1 = KeyWordService.getObjectFromPath(user, "firstName");
-        assertEquals("Test", result1);
+    public void testWhitPublicAttribut() {
+        var result = KeyWordService.getObjectFromPath(user, "objectName");
+        assertEquals("This is a user", result);
     }
 
     @Test
-    public void testWithAttributAndMethods() {
-        var result2 = KeyWordService.getObjectFromPath(user, "address.getFullAddress()");
-        assertEquals("42 rue St Rôme, Capitole, Toulouse", result2);
+    public void testWhitPrivateAttribut() {
+        var result = KeyWordService.getObjectFromPath(user, "firstName");
+        assertNull(result);
     }
 
     @Test
-    public void testWithMethods() {
-        var result3 = KeyWordService.getObjectFromPath(user, "getCompany().getAddress().getStreetNumber()");
-        assertEquals(123, result3);
+    public void testWithPublicMethods() {
+        var result = KeyWordService.getObjectFromPath(user, "getAddress().getFullAddress()");
+        assertEquals("42 rue St Rôme, Capitole, Toulouse", result);
+    }
+
+    @Test
+    public void testWithPrivateMethods() {
+        var result = KeyWordService.getObjectFromPath(user, "getJobToDisplay()");
+        assertNull(result);
+    }
+
+    @Test
+    public void testWithMethodsAndAttributs() {
+        var result = KeyWordService.getObjectFromPath(user, "getCompany().objectName");
+        assertEquals("This is a company", result);
     }
 
     @Test
     public void testFalsePath() {
-        var result4 = KeyWordService.getObjectFromPath(user, "fakeAttribut.name");
-        assertNull(result4);
+        var result = KeyWordService.getObjectFromPath(user, "fakeAttribut.name");
+        assertNull(result);
     }
 }

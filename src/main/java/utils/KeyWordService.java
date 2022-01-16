@@ -70,9 +70,7 @@ public class KeyWordService {
             // Cas d'un attribut de class
             var fieldName = path.split("\\.", 2)[0].split("\\(", 2)[0];
             try {
-                Field field = objClass.getDeclaredField(fieldName);
-                field.setAccessible(true);
-                return field.get(obj);
+                return objClass.getDeclaredField(fieldName).get(obj);
             } catch (NoSuchFieldException e) {
                 log.info(String.format("Impossible de trouver le champ : %s", fieldName));
                 return null;
