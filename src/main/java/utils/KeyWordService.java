@@ -2,7 +2,6 @@ package utils;
 
 import lombok.extern.java.Log;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 @Log
@@ -14,22 +13,26 @@ public class KeyWordService {
     }
 
 
+
     /**
      * Retourne le sous objet à partir de son chemin (@param fieldPath)
      * Support également les noms de méthodes public sans argument
      * <p>
      * ex : order.getUser().name
      */
-    public static Object getObjectFromPath(Object obj, String fieldPath) {
+    public static Object getObjectFromPath(Object obj, String fieldPath, Class<?> objClass) {
         if (obj == null) {
             log.info(String.format("L'objet passé en paramètre est null. Chemin du champ : %s", fieldPath));
             return null;
         }
-        Class<?> objClass = obj.getClass();
         var newObj = trans_m_a(obj, objClass, fieldPath);
         if (fieldPath.split("\\.", 2).length > 1) {
             // Récursivité pour passer à l'élément suivant
-            return getObjectFromPath(newObj, fieldPath.split("\\.", 2)[1]);
+            if (newObj != null) {
+                Class<?> newObjClass = newObj.getClass();
+                return getObjectFromPath(newObj, fieldPath.split("\\.", 2)[1], newObjClass);
+            }
+            return null;
         } else {
             // Fin du traitement
             return newObj;
@@ -71,12 +74,15 @@ public class KeyWordService {
             var fieldName = path.split("\\.", 2)[0].split("\\(", 2)[0];
             try {
                 return objClass.getDeclaredField(fieldName).get(obj);
+
             } catch (NoSuchFieldException e) {
                 log.info(String.format("Impossible de trouver le champ : %s", fieldName));
                 return null;
+
             } catch (IllegalAccessException e) {
                 log.info(String.format("Impossible de trouver le champ : %s", fieldName));
                 return null;
+
             } catch (NullPointerException e) {
                 log.info(String.format("L'objet passé en paramètre est null. Chemin du champ : %s", fieldName));
                 return null;
