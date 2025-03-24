@@ -1,8 +1,8 @@
-# klanik-vt-clean-code
+# kata-clean-code
 
 ## Objet
 
-Ce repo a pour but de proposer à un candidat de refactor une classe `KeyWordService`.
+Ce repo a pour but de proposer un exercice de refactoring une classe `KeyWordService`.
 
 ## Getting started
 
