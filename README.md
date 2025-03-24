@@ -29,9 +29,9 @@ KeyWordService.getObjectFromPath(user, "company.getAddress().name")
 Dans l'exemple ci-dessus on accède dans un premier temps à l'attribut `company` de l'objet `user` passé en paramètre. Puis on accèdera à la méthode `getAddress` (retournant l'adresse de la company) du sous objet company.
 Enfin on accèdera à l'attribut de classe `name`.
 
-## Ce qui est attendu du candidat
+## Ce qui est attendu
 
-Le candidat a pour misson de refactor la classe `KeyWordService` en appliquant toutes des techniques des clean code connues. Il est donc normal que certaines parties du codes paraissent peu explictes, simplifiables ou même inutiles.
+Vous aurez pour misson de refactor la classe `KeyWordService` en appliquant toutes des techniques des clean code connues. Il est donc normal que certaines parties du codes paraissent peu explictes, simplifiables ou même inutiles.
 
 Il sera ensuite demandé de justifier les choix fait l'oral.
 
